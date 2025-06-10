@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "name": "WSL",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu17",            
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-x64",
+      "includePath": [
+        "/usr/include",
+        "/usr/include/x86_64-linux-gnu",
+        "${workspaceFolder}/**"
+      ],
+      "browse": {
+        "path": [
+          "/usr/include",
+          "/usr/include/x86_64-linux-gnu",
+          "${workspaceFolder}"
+        ]
+      }
+    }
+  ],
+  "version": 4
+}
