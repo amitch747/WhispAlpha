@@ -16,10 +16,14 @@ int main(int argc, char *argv[])
     int status;
     char ipstr[INET6_ADDRSTRLEN];
 
+    
+
     if (argc != 2) {
         fprintf(stderr, "usage: showip hostname\n");
         return 1;
     }
+
+
 
     memset(&hints, 0, sizeof hints);
     hints.ai_family = AF_UNSPEC; // AF_INET OR AF_INET6 also options
@@ -51,7 +55,13 @@ int main(int argc, char *argv[])
         printf(" %s: %s\n", ipver, ipstr);
 
     }
-    freeaddrinfo(res);
+    int sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
 
+    int bindOutput = bind(sockfd, res->ai_addr, res->ai_addrlen);
+
+    
+    
     return 0;
+
+
 }
