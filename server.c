@@ -81,6 +81,19 @@ int main(void)
             perror("server: bind");
             continue;
         }
+
+        printf("DEBUG: Successfully bound to ");
+if (p->ai_family == AF_INET) {
+    struct sockaddr_in *addr_in = (struct sockaddr_in *)p->ai_addr;
+    char ip_str[INET_ADDRSTRLEN];
+    inet_ntop(AF_INET, &addr_in->sin_addr, ip_str, INET_ADDRSTRLEN);
+    printf("IPv4 %s:%d\n", ip_str, ntohs(addr_in->sin_port));
+} else if (p->ai_family == AF_INET6) {
+    struct sockaddr_in6 *addr_in6 = (struct sockaddr_in6 *)p->ai_addr;
+    char ip_str[INET6_ADDRSTRLEN];
+    inet_ntop(AF_INET6, &addr_in6->sin6_addr, ip_str, INET6_ADDRSTRLEN);
+    printf("IPv6 [%s]:%d\n", ip_str, ntohs(addr_in6->sin6_port));
+}
         break;
     }
 
@@ -95,6 +108,9 @@ int main(void)
         perror("listen");
         exit(1);
     }
+
+    printf("DEBUG: listen() succeeded, server is now listening\n");
+fflush(stdout);
 
     sa.sa_handler = sigchld_handler; // reap dead guys
     sigemptyset(&sa.sa_mask); // dont block other signals
@@ -124,7 +140,7 @@ int main(void)
 
         if (!fork()) {
             close(sockfd);
-            if (send(new_fd, "Hello world!", 13, 0) == -1) {
+            if (send(new_fd, "Hello world\n", 13, 0) == -1) {
                 perror("send");                
             }
             close(new_fd);
