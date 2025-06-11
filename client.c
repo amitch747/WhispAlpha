@@ -17,6 +17,7 @@
 #define PORT "3490"
 #define MAXDATASIZE 100 // max bytes to get at once
 
+
 // get sockaddr, v4/v6
 void *get_in_addr(struct sockaddr *sa)
 {
@@ -57,11 +58,16 @@ int main(int argc, char *argv[])
         inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),s, sizeof s);
         printf("client: attempting connection to %s\n", s);
 
+        printf("DEBUG: About to call connect()...\n");
+        fflush(stdout);
+
         if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
             perror("client: connect");
             close(sockfd);
             continue;
         }
+        printf("DEBUG: connect() succeeded!\n");
+
         break;
     }
 

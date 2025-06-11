@@ -55,7 +55,7 @@ int main(void)
     int rv;
 
     memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_INET;
+    hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM; // TCP
     hints.ai_flags = AI_PASSIVE; // my ip
 
@@ -107,10 +107,14 @@ int main(void)
 
     printf("server: waiting for connections...\n");
 
+ 
 
     while(1) {
+        printf("DEBUG: Calling accept()...\n");
+        fflush(stdout);
         sin_size = sizeof their_addr;
         new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
+        printf("new_fd: %d", new_fd);
         if (new_fd == -1) {
             perror("accept");
             continue;
