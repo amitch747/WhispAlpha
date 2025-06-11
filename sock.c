@@ -26,6 +26,7 @@ int main(void)
         return 1;
     }
 
+
     sockfd = socket(res->ai_family, res->ai_socktype, res->ai_protocol);
     int iDontNeedThis = bind(sockfd, res->ai_addr, res->ai_addrlen);
     listen(sockfd, BACKLOG);
