@@ -26,6 +26,7 @@ void *get_in_addr(struct sockaddr *sa)
     return &(((struct sockaddr_in6*)sa)->sin6_addr);
 }
 
+
 // return listening socket
 int get_listener_socket(void)
 {
