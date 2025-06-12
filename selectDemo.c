@@ -14,7 +14,7 @@ selectDemo.c -- testing select()
 int main(void) 
 {
 
-    struct timeval tv;
+    struct timeval tv; 
     fd_set readfds;
     char c;
     tv.tv_sec = 2;
