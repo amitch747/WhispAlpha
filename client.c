@@ -58,7 +58,6 @@ int main(int argc, char *argv[])
         inet_ntop(p->ai_family, get_in_addr((struct sockaddr *)p->ai_addr),s, sizeof s);
         printf("client: attempting connection to %s\n", s);
 
-        printf("DEBUG: About to call connect()...\n");
         fflush(stdout);
 
         if (connect(sockfd, p->ai_addr, p->ai_addrlen) == -1) {
@@ -66,7 +65,6 @@ int main(int argc, char *argv[])
             close(sockfd);
             continue;
         }
-        printf("DEBUG: connect() succeeded!\n");
 
         break;
     }

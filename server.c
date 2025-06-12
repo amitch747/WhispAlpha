@@ -82,18 +82,7 @@ int main(void)
             continue;
         }
 
-        printf("DEBUG: Successfully bound to ");
-if (p->ai_family == AF_INET) {
-    struct sockaddr_in *addr_in = (struct sockaddr_in *)p->ai_addr;
-    char ip_str[INET_ADDRSTRLEN];
-    inet_ntop(AF_INET, &addr_in->sin_addr, ip_str, INET_ADDRSTRLEN);
-    printf("IPv4 %s:%d\n", ip_str, ntohs(addr_in->sin_port));
-} else if (p->ai_family == AF_INET6) {
-    struct sockaddr_in6 *addr_in6 = (struct sockaddr_in6 *)p->ai_addr;
-    char ip_str[INET6_ADDRSTRLEN];
-    inet_ntop(AF_INET6, &addr_in6->sin6_addr, ip_str, INET6_ADDRSTRLEN);
-    printf("IPv6 [%s]:%d\n", ip_str, ntohs(addr_in6->sin6_port));
-}
+
         break;
     }
 
@@ -109,7 +98,6 @@ if (p->ai_family == AF_INET) {
         exit(1);
     }
 
-    printf("DEBUG: listen() succeeded, server is now listening\n");
 fflush(stdout);
 
     sa.sa_handler = sigchld_handler; // reap dead guys
@@ -126,11 +114,9 @@ fflush(stdout);
  
 
     while(1) {
-        printf("DEBUG: Calling accept()...\n");
         fflush(stdout);
         sin_size = sizeof their_addr;
         new_fd = accept(sockfd, (struct sockaddr *)&their_addr, &sin_size);
-        printf("new_fd: %d", new_fd);
         if (new_fd == -1) {
             perror("accept");
             continue;
@@ -144,7 +130,6 @@ fflush(stdout);
                 perror("send");                
             }
             close(new_fd);
-            exit(0);
         }
         close(new_fd);
     }
